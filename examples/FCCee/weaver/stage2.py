@@ -1,7 +1,16 @@
 import sys
 from array import array
 from ROOT import TFile, TTree
-from examples.FCCee.weaver.config import variables_pfcand, variables_jet, flavors
+#from examples.FCCee.weaver.config import variables_pfcand, variables_jet, flavors
+
+#Jim
+#sys.path.insert(0,'/sdf/home/d/dntounis/Hss/FCCAnalyses_Winter2023')
+sys.path.insert(0,'/fs/ddn/sdf/group/atlas/d/dntounis/Hss_setup_test/FCCAnalyses_Winter2023')
+
+import examples.FCCee.weaver.config
+print(examples.FCCee.weaver.config.__file__)
+
+from examples.FCCee.weaver.config import variables_pfcand, variables_jet, variables_event, flavors #Jim
 
 debug = False
 
@@ -28,6 +37,7 @@ if n_final > n_start + numberOfEntries:
 
 branches_pfcand = list(variables_pfcand.keys())
 branches_jet = list(variables_jet.keys())
+branches_ev = list(variables_event.keys()) #Jim
 
 if len(branches_jet) == 0:
     print("ERROR: branches_jet is empty ...")
@@ -55,7 +65,7 @@ for f in flavors:
 
 if True in match_flavor.values():
     f0 = list(match_flavor.keys())[list(match_flavor.values()).index(True)]
-    # print("producing  '{}-flavor' jets ...".format(f0, f0))
+    print("producing  '{}-flavor' jets ...".format(f0, f0))
 else:
     print("ERROR: could not infer jet flavor from file name")
     str_err = "ERROR: please provide input file containing: "
@@ -90,17 +100,41 @@ if debug:
     for key, item in pfcand_array.items():
         print(key)
 
+import math
+
 # Loop over all events
 for entry in range(n_start, n_final):
     # Load selected branches with data from specified event
 
     # if (entry+1)%100 == 0:
-    # if (entry + 1) % 1000 == 0:
-    #    print(" ... processed {} events ...".format(entry + 1))
+    if (entry + 1) % 1000 == 0:
+    	print(" ... processed {} events ...".format(entry + 1))
 
     ev.GetEntry(entry)
 
     njets = len(getattr(ev, branches_jet[0]))
+    inv_mass = getattr(ev,branches_ev[0]) #Jim
+
+
+#   #Jim: only keep events where inv_mass>0 -- helps with NaN
+#    if not inv_mass > 0 :
+#        continue
+#
+#    # Get jet_theta branch for each jet
+#    jet_thetas = getattr(ev, "jet_theta")
+#
+#    # Check there are at least 2 jets
+#    if njets < 2:
+#        continue
+#
+#    # Compute eta for the first two jets
+#    jet_eta_1 = -math.log(math.tan(jet_thetas[0] / 2))
+#    jet_eta_2 = -math.log(math.tan(jet_thetas[1] / 2))
+#
+#    # Check if both jets have |eta| < 2.56
+#    if not (abs(jet_eta_1) < 2.56 and abs(jet_eta_2) < 2.56):
+#        continue
+
 
     ## loop over jets
     for j in range(njets):

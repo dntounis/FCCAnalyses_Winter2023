@@ -11,7 +11,9 @@ njets = 2
 ## name of collections in EDM root files
 collections = {
     "GenParticles": "Particle",
+    #"GenParticles": "MCParticle",
     "PFParticles": "ReconstructedParticles",
+    #"PFParticles": "PandoraPFOs",
     "PFTracks": "EFlowTrack",
     "PFPhotons": "EFlowPhoton",
     "PFNeutralHadrons": "EFlowNeutralHadron",
@@ -24,7 +26,15 @@ collections = {
 }
 
 #### list of flavors f = g, q, c, s, ...(will look for input file name ccontaining "[Hff]")
-flavors = ["g", "q", "s", "c", "b", "tau"]
+#flavors = ["g", "q", "s", "c", "b", "tau"]
+
+#flavors = ["u","d","c","s","b","tau","g"]
+#flavors = ["u","d","c","s","b","g"]
+
+flavors = ["q","c","s","b","g"]
+
+#flavors = ["d","c","s","b"] #Jim
+
 
 ## define here the branches to be stored in the output root files in addition to the predefined one
 ## only the name of the var is used here, the metadata is used in stage_plots
@@ -33,7 +43,7 @@ variables_pfcand = {
         "name": "pfcand_erel_log",
         "title": "log(E_{i}/E_{jet})",
         "bin": 100,
-        "xmin": -3,
+        "xmin": -1.5,
         "xmax": 0,
         "scale": "log",
     },
@@ -51,13 +61,13 @@ variables_pfcand = {
         "bin": 100,
         "xmin": -3.14,
         "xmax": 3.14,
-        "scale": "lin",
+        "scale": "log",
     },
     "pfcand_dptdpt": {
         "name": "pfcand_dptdpt",
         "title": "#sigma(#omega)^{2}",
         "bin": 100,
-        "xmin": 0.0,
+        "xmin": -10,
         "xmax": 2e-09,
         "scale": "log",
     },
@@ -65,7 +75,7 @@ variables_pfcand = {
         "name": "pfcand_detadeta",
         "title": "#sigma(tan(#lambda))^{2}",
         "bin": 100,
-        "xmin": 0.0,
+        "xmin": -10,
         "xmax": 0.02,
         "scale": "log",
     },
@@ -73,15 +83,15 @@ variables_pfcand = {
         "name": "pfcand_dphidphi",
         "title": "#sigma(#phi))^{2}",
         "bin": 100,
-        "xmin": 0.0,
-        "xmax": 0.0015,
+        "xmin": -10,
+        "xmax": 0.1,
         "scale": "log",
     },
     "pfcand_dxydxy": {
         "name": "pfcand_dxydxy",
         "title": "#sigma(d_{xy}))^{2}",
         "bin": 100,
-        "xmin": 0.0,
+        "xmin": -10,
         "xmax": 0.20,
         "scale": "log",
     },
@@ -89,8 +99,8 @@ variables_pfcand = {
         "name": "pfcand_dzdz",
         "title": "#sigma(d_{z}))^{2}",
         "bin": 100,
-        "xmin": 0.0,
-        "xmax": 0.50,
+        "xmin": -10,
+        "xmax": 1e6,
         "scale": "log",
     },
     "pfcand_dxydz": {
@@ -105,7 +115,7 @@ variables_pfcand = {
         "name": "pfcand_dphidxy",
         "title": "C(#phi,d_{z})",
         "bin": 100,
-        "xmin": -0.1,
+        "xmin": -10.0,
         "xmax": 0,
         "scale": "log",
     },
@@ -113,7 +123,7 @@ variables_pfcand = {
         "name": "pfcand_dlambdadz",
         "title": "C(tan(#lambda),d_{z})",
         "bin": 100,
-        "xmin": -0.5,
+        "xmin": -1000,
         "xmax": 0.1,
         "scale": "log",
     },
@@ -121,7 +131,7 @@ variables_pfcand = {
         "name": "pfcand_dxyc",
         "title": "C(#omega,d_{xy})",
         "bin": 100,
-        "xmin": -0.2,
+        "xmin": -10.0,
         "xmax": 0.1,
         "scale": "log",
     },
@@ -129,7 +139,7 @@ variables_pfcand = {
         "name": "pfcand_dxyctgtheta",
         "title": "C(tan(#lambda),d_{xy})",
         "bin": 100,
-        "xmin": -0.025,
+        "xmin": -40,
         "xmax": 0.025,
         "scale": "log",
     },
@@ -137,7 +147,7 @@ variables_pfcand = {
         "name": "pfcand_phic",
         "title": "C(#omega,#phi)",
         "bin": 100,
-        "xmin": -1e-06,
+        "xmin": -10,
         "xmax": 1e-06,
         "scale": "log",
     },
@@ -145,7 +155,7 @@ variables_pfcand = {
         "name": "pfcand_phidz",
         "title": "C(#phi,d_{z})",
         "bin": 100,
-        "xmin": -0.05,
+        "xmin": -50.0,
         "xmax": 0.05,
         "scale": "log",
     },
@@ -153,8 +163,8 @@ variables_pfcand = {
         "name": "pfcand_phictgtheta",
         "title": "C(tan(#lambda),#phi)",
         "bin": 100,
-        "xmin": -0.1e-03,
-        "xmax": 0.5e03,
+        "xmin": -10,
+        "xmax": 10,
         "scale": "log",
     },
     "pfcand_cdz": {
@@ -178,7 +188,7 @@ variables_pfcand = {
         "title": "m_{ToF} [GeV]",
         "bin": 100,
         "xmin": 0,
-        "xmax": 1.5,
+        "xmax": 300,
         "scale": "lin",
     },
     "pfcand_dndx": {
@@ -192,10 +202,10 @@ variables_pfcand = {
     "pfcand_charge": {
         "name": "pfcand_charge",
         "title": "Q",
-        "bin": 2,
-        "xmin": -0.5,
-        "xmax": 1.5,
-        "scale": "lin",
+        "bin": 5,
+        "xmin":  -1.5,
+        "xmax":   1.5,
+        "scale": "log",
     },
     "pfcand_isMu": {
         "name": "pfcand_isMu",
@@ -240,57 +250,57 @@ variables_pfcand = {
     "pfcand_type": {
         "name": "pfcand_type",
         "title": "PDG code",
-        "bin": 10000,
-        "xmin": -5000,
-        "xmax": 5000,
+        "bin": 200,
+        "xmin": -100,
+        "xmax": 100,
         "scale": "lin",
     },
     "pfcand_dxy": {
         "name": "pfcand_dxy",
         "title": "d_{xy} [mm]",
-        "bin": 100,
-        "xmin": -0.5,
-        "xmax": 0.5,
+        "bin": 400,
+        "xmin": -2.0,
+        "xmax": 2.0,
         "scale": "log",
     },
     "pfcand_dz": {
         "name": "pfcand_dz",
         "title": "d_{z} [mm]",
-        "bin": 100,
-        "xmin": -0.5,
-        "xmax": 0.5,
+        "bin": 400,
+        "xmin": -2.0,
+        "xmax": 2.0,
         "scale": "log",
     },
     "pfcand_btagSip2dVal": {
         "name": "pfcand_btagSip2dVal",
         "title": "2D signed IP [mm]",
-        "bin": 100,
-        "xmin": -0.5,
-        "xmax": 5,
+        "bin": 200,
+        "xmin": -10.0,
+        "xmax": 10,
         "scale": "log",
     },
     "pfcand_btagSip2dSig": {
         "name": "pfcand_btagSip2dSig",
         "title": "2D signed IP significance",
-        "bin": 100,
-        "xmin": -10,
-        "xmax": 10,
+        "bin": 400,
+        "xmin": -20,
+        "xmax": 20,
         "scale": "log",
     },
     "pfcand_btagSip3dVal": {
         "name": "pfcand_btagSip3dVal",
         "title": "3D signed IP [mm]",
-        "bin": 100,
-        "xmin": -0.5,
-        "xmax": 5,
+        "bin": 200,
+        "xmin": -10.0,
+        "xmax": 10,
         "scale": "log",
     },
     "pfcand_btagSip3dSig": {
         "name": "pfcand_btagSip3dSig",
         "title": "3D signed IP significance",
-        "bin": 100,
-        "xmin": -8,
-        "xmax": 10,
+        "bin": 400,
+        "xmin": -20,
+        "xmax": 20,
         "scale": "log",
     },
     "pfcand_btagJetDistVal": {
@@ -304,9 +314,9 @@ variables_pfcand = {
     "pfcand_btagJetDistSig": {
         "name": "pfcand_btagJetDistSig",
         "title": "distance to jet (significance)",
-        "bin": 100,
+        "bin": 200,
         "xmin": 0,
-        "xmax": 10,
+        "xmax": 20,
         "scale": "log",
     },
     ### other pf cand observer variables
@@ -326,6 +336,7 @@ variables_pfcand = {
         "xmax": 100,
         "scale": "log",
     },
+
     "pfcand_theta": {
         "name": "pfcand_theta",
         "title": "#theta",
@@ -340,8 +351,9 @@ variables_pfcand = {
         "bin": 100,
         "xmin": -3.14,
         "xmax": 3.14,
-        "scale": "lin",
+        "scale": "log",
     },
+
 }
 
 variables_jet = {
@@ -349,17 +361,17 @@ variables_jet = {
     "jet_p": {
         "name": "jet_p",
         "title": "p_{jet} [GeV]",
-        "bin": 100,
+        "bin": 150,
         "xmin": 0,
-        "xmax": 100.0,
+        "xmax": 150.0,
         "scale": "lin",
     },
     "jet_e": {
         "name": "jet_e",
         "title": "E_{jet} [GeV]",
-        "bin": 100,
+        "bin": 150,
         "xmin": 0,
-        "xmax": 100.0,
+        "xmax": 150.0,
         "scale": "lin",
     },
     "jet_mass": {
@@ -367,16 +379,16 @@ variables_jet = {
         "title": "m_{jet} [GeV]",
         "bin": 100,
         "xmin": 0,
-        "xmax": 25,
+        "xmax": 60,
         "scale": "lin",
     },
     "jet_phi": {
         "name": "jet_phi",
         "title": "#phi_{jet}",
         "bin": 100,
-        "xmin": -3.14,
-        "xmax": 3.14,
-        "scale": "lin",
+        "xmin": 0,
+        "xmax": 2*3.14,
+        "scale": "log",
     },
     "jet_theta": {
         "name": "jet_theta",
@@ -404,7 +416,7 @@ variables_jet = {
     },
     "jet_nel": {
         "name": "N_{el}^{jet}",
-        "title": "",
+        "title": "N_{el}^{jet}",
         "bin": 5,
         "xmin": 0,
         "xmax": 5,
@@ -413,17 +425,17 @@ variables_jet = {
     "jet_nchad": {
         "name": "jet_nchad",
         "title": "N_{ch.had}^{jet}",
-        "bin": 50,
+        "bin": 70,
         "xmin": 0,
-        "xmax": 50,
+        "xmax": 70,
         "scale": "log",
     },
     "jet_ngamma": {
         "name": "jet_ngamma",
         "title": "N_{#gamma}^{jet}",
-        "bin": 50,
+        "bin": 60,
         "xmin": 0,
-        "xmax": 50,
+        "xmax": 60,
         "scale": "log",
     },
     "jet_nnhad": {

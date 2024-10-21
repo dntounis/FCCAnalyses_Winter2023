@@ -1,3 +1,10 @@
+import sys
+#Jim
+sys.path.insert(0,'/fs/ddn/sdf/group/atlas/d/dntounis/Hss_setup_test/FCCAnalyses_Winter2023')
+
+import examples.FCCee.weaver.config
+print(examples.FCCee.weaver.config.__file__)
+
 from examples.FCCee.weaver.config import (
     variables_pfcand,
     variables_jet,

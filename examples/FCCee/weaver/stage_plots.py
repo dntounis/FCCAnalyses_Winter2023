@@ -1,4 +1,5 @@
 import ROOT
+ROOT.gROOT.SetBatch(True) #Jim
 import os
 import argparse
 
@@ -22,6 +23,15 @@ def main():
     # Enable multi-threading
     ROOT.ROOT.EnableImplicitMT()
 
+    #Jim
+    import sys
+    #sys.path.insert(0,'/sdf/home/d/dntounis/Hss/FCCAnalyses_Winter2023')
+    sys.path.insert(0,'/fs/ddn/sdf/group/atlas/d/dntounis/Hss_setup_test/FCCAnalyses_Winter2023')
+
+    import examples.FCCee.weaver.config
+    print(examples.FCCee.weaver.config.__file__)
+
+
     from examples.FCCee.weaver.config import variables_pfcand, variables_jet, variables_event, flavors
 
     input_dir = args.indir
@@ -32,15 +42,18 @@ def main():
     for f in flavors:
 
         sample_a = {
-            "file": "{}/ntuple_test_wzp6_ee_nunuH_H{}{}.root".format(input_dir, f, f),
+            #"file": "{}/out_H{}{}_DELPHES_SiD_o2_v04_Winter2023.root".format(input_dir, f, f),
+            "file": "{}/out_H{}{}_DELPHES_SiD_o2_v04_Winter2023_v2_200K.root".format(input_dir, f, f), 
             "flavor": f,
             "label": "WZ + Pythia6",
         }
         sample_b = {
-            "file": "{}/ntuple_test_p8_ee_ZH_Znunu_H{}{}.root".format(input_dir, f, f),
-            "flavor": f,
+            #"file": "{}/out_H{}{}_DELPHES_SiD_o2_v04_Winter2023.root".format(input_dir, f, f),
+            "file": "{}/out_H{}{}_DELPHES_SiD_o2_v04_Winter2023_v2_200K.root".format(input_dir, f, f),
+	    "flavor": f,
             "label": "Pythia8",
         }
+        
         # We read the tree from the file and create a RDataFrame.
         df_a = ROOT.RDataFrame("tree", sample_a["file"])
         df_b = ROOT.RDataFrame("tree", sample_b["file"])
@@ -245,19 +258,19 @@ def plot(sample_a, sample_b, histo_coll, var, params, outdir):
     text.SetNDC()
     text.SetTextFont(72)
     text.SetTextSize(0.05)
-    text.DrawLatex(0.14, 0.91, "FCC-ee")
+    text.DrawLatex(0.14, 0.91, "SiD")
     text.SetTextFont(42)
-    text.DrawLatex(0.27, 0.91, "(Delphes Simulation)")
+    text.DrawLatex(0.20, 0.91, "(Delphes)")
     text.SetTextSize(0.05)
     text.DrawLatex(0.25, 0.78, "e^{+}e^{-} #rightarrow Z (#nu #nu) H (j j)")
     text.SetTextSize(0.04)
-    text.DrawLatex(0.28, 0.71, "j = q, s, c, b, g")
+    text.DrawLatex(0.28, 0.71, "j = q, s, c, b")
     text.SetTextSize(0.05)
     text.SetTextAlign(31)
-    text.DrawLatex(0.95, 0.91, "#sqrt{s} = 240 GeV, 5 ab^{-1}")
+    text.DrawLatex(0.95, 0.91, "#sqrt{s} = 250 GeV, 10^{4} events")
 
     # Save the plot
-    figpath = "{}/{}_{}.png".format(outdir, sample_a["flavor"], var)
+    figpath = "{}/{}_{}.pdf".format(outdir, sample_a["flavor"], var)
     c.SaveAs(figpath)
 
 
