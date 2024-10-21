@@ -235,8 +235,13 @@ class JetFlavourHelper:
         for varname in data["pf_features"]["var_names"]:
             initvars.append(varname)
             self.variables.append("{}{}".format(varname, self.tag))
+        # Dimitris: comment pf_vectors out
+        #for varname in data["pf_vectors"]["var_names"]:
+        #    initvars.append(varname)
+        #    self.variables.append("{}{}".format(varname, self.tag))
 
-        for varname in data["pf_vectors"]["var_names"]:
+       #Jim: not sure I should have that here or not
+        for varname in data["pf_points"]["var_names"]:
             initvars.append(varname)
             self.variables.append("{}{}".format(varname, self.tag))
 
